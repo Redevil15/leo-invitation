@@ -8,6 +8,7 @@
 import Decorations from './components/Decorations';
 import InvitationCard from './components/InvitationCard';
 import type { InvitationData } from './types';
+import AudioPlayer from './components/AudioPlayer';
 import './App.css';
 
 // ============================================
@@ -71,6 +72,7 @@ export default function App() {
   return (
     <>
       <Decorations />
+      <AudioPlayer src="/musica.mp3" />
       <main className="app-container">
         <InvitationCard data={invitationData} />
       </main>
