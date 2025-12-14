@@ -57,9 +57,9 @@ Número de personas: `,
   },
 
   photos: [
-    { src: '/src/images/Leo1.jpeg', alt: 'Leonardo 1' },
-    { src: '/src/images/Leo2.jpeg', alt: 'Leonardo 2' },
-    { src: '/src/images/Leo5.jpeg', alt: 'Leonardo 3' },
+    { src: '/public/Leo5.jpeg', alt: 'Leonardo 3' },
+    { src: '/public/Leo1.jpeg', alt: 'Leonardo 3' },
+    { src: '/public/Leo2.jpeg', alt: 'Leonardo 3' },
   ],
 };
 
