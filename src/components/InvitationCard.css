@@ -1,5 +1,5 @@
 /* ============================================
-   INVITATIONCARD.CSS - VERSIÓN MEJORADA
+   INVITATIONCARD.CSS - CON MODAL DE FOTOS
    ============================================ */
 
 /* TARJETA PRINCIPAL */
@@ -144,10 +144,9 @@
 }
 
 /* ============================================
-   SECCIONES DE INFORMACIÓN - DISEÑO MEJORADO
+   SECCIONES DE INFORMACIÓN
    ============================================ */
 
-/* Contenedor de todas las secciones de info */
 .info-sections-container {
   display: flex;
   flex-direction: column;
@@ -155,7 +154,6 @@
   margin-bottom: var(--spacing-lg);
 }
 
-/* Cada sección de info como tarjeta horizontal */
 .info-section {
   display: flex;
   align-items: center;
@@ -184,7 +182,6 @@
   animation-delay: 0.3s;
 }
 
-/* Icono en círculo */
 .icon-box {
   display: flex;
   align-items: center;
@@ -202,7 +199,6 @@
   box-shadow: 0 3px 10px rgba(200, 16, 46, 0.3);
 }
 
-/* Contenido de texto a la derecha */
 .info-content {
   display: flex;
   flex-direction: column;
@@ -230,31 +226,6 @@
 .location-address {
   font-style: normal;
 }
-
-/* ============================================
-   ALTERNATIVA: DISEÑO EN GRID (3 columnas)
-   ============================================ */
-
-/* Si prefieres las 3 secciones en una fila horizontal:
-   
-.info-sections-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-sm);
-}
-
-.info-section {
-  flex-direction: column;
-  text-align: center;
-  padding: var(--spacing-lg) var(--spacing-sm);
-  border-left: none;
-  border-top: 4px solid var(--toluca-red);
-}
-
-.icon-box {
-  margin-bottom: var(--spacing-sm);
-}
-*/
 
 /* ============================================
    DRESS CODE
@@ -296,7 +267,7 @@
 }
 
 /* ============================================
-   GALERÍA
+   GALERÍA DE FOTOS
    ============================================ */
 .photo-gallery {
   margin: var(--spacing-xl) 0;
@@ -322,9 +293,9 @@
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 3px solid var(--toluca-red);
-  transition: transform var(--transition-normal),
-    box-shadow var(--transition-normal);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  position: relative;
 }
 
 .photo-item:hover {
@@ -332,12 +303,47 @@
   box-shadow: 0 10px 30px rgba(200, 16, 46, 0.3);
 }
 
+.photo-item:focus {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
 .photo-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
+.photo-item:hover img {
+  transform: scale(1.1);
+}
+
+/* Overlay con icono de zoom */
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-item:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-zoom-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Placeholders */
 .photo-placeholder {
   background: linear-gradient(135deg, var(--gray-light) 0%, #e8e8e8 100%);
   display: flex;
@@ -345,6 +351,12 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
+  cursor: default;
+}
+
+.photo-placeholder:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .placeholder-icon {
@@ -372,6 +384,112 @@
   border-radius: 4px;
   font-family: monospace;
   font-size: 0.75rem;
+}
+
+/* ============================================
+   MODAL DE FOTO (LIGHTBOX)
+   ============================================ */
+
+/* Overlay oscuro de fondo */
+.photo-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Contenedor del contenido del modal */
+.photo-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Botón de cerrar */
+.photo-modal-close {
+  position: absolute;
+  top: -40px;
+  right: -10px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--white);
+  color: var(--gray-dark);
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.photo-modal-close:hover {
+  transform: scale(1.1);
+  background: var(--toluca-red);
+  color: var(--white);
+}
+
+/* Imagen grande */
+.photo-modal-image {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Caption debajo de la imagen */
+.photo-modal-caption {
+  margin-top: var(--spacing-md);
+  color: var(--white);
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0.9;
+}
+
+/* Hint para cerrar */
+.photo-modal-hint {
+  position: absolute;
+  bottom: var(--spacing-lg);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  text-align: center;
 }
 
 /* ============================================
@@ -508,7 +626,6 @@
     font-size: 0.9rem;
   }
 
-  /* Info sections en móvil */
   .info-section {
     padding: var(--spacing-sm) var(--spacing-md);
   }
@@ -522,6 +639,16 @@
 
   .info-value {
     font-size: 0.95rem;
+  }
+
+  /* Modal en móvil */
+  .photo-modal-close {
+    top: -45px;
+    right: 0;
+  }
+
+  .photo-modal-hint {
+    font-size: 0.75rem;
   }
 }
 
