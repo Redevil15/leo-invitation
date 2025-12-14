@@ -1,0 +1,337 @@
+/* ============================================
+   DECORATIONS.CSS - ESTILOS DE DECORACIONES
+   ============================================
+   Contiene:
+   - Estilos del contenedor de confeti
+   - Posicionamiento de cada pieza de confeti
+   - Estilos de los balones de fútbol
+   - Posicionamiento específico de cada balón
+*/
+
+/* ============================================
+   CONTENEDOR DE CONFETI
+   ============================================
+*/
+.confetti-container {
+  /*
+    position: fixed posiciona relativo al viewport.
+    
+    Diferencia con absolute:
+    - fixed: Siempre relativo a la ventana, no se mueve con scroll
+    - absolute: Relativo al ancestro posicionado más cercano
+    
+    Usamos fixed para que el confeti cubra toda la pantalla
+    y permanezca visible durante el scroll.
+  */
+  position: fixed;
+
+  /*
+    top, left, width, height definen el área.
+    Cubrir todo el viewport: desde 0,0 hasta 100%,100%
+  */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /*
+    pointer-events: none hace que el elemento sea
+    "transparente" a los clicks/taps.
+    
+    Sin esto, el confeti bloquearía la interacción
+    con los botones y otros elementos debajo.
+    
+    Los clicks "atraviesan" este elemento.
+  */
+  pointer-events: none;
+
+  /*
+    z-index: 1 pone el confeti detrás del contenido
+    principal (que tiene z-index: 2).
+    
+    Jerarquía visual:
+    - z-index: 1 → Decoraciones (fondo)
+    - z-index: 2 → Contenido principal
+    - z-index: 3+ → Modals, tooltips (si los hubiera)
+  */
+  z-index: 1;
+
+  /*
+    overflow: hidden oculta cualquier pieza de confeti
+    que se salga del contenedor.
+    
+    Útil si alguna animación mueve piezas fuera del viewport.
+  */
+  overflow: hidden;
+}
+
+/* ============================================
+   PIEZAS DE CONFETI
+   ============================================
+*/
+.confetti {
+  /*
+    position: absolute dentro del contenedor fixed.
+    Cada pieza se posiciona independientemente
+    con top/left definidos por nth-child.
+  */
+  position: absolute;
+
+  /* Tamaño de cada pieza */
+  width: 10px;
+  height: 10px;
+
+  /* Ligeramente transparente para suavidad */
+  opacity: 0.8;
+
+  /*
+    Animación de parpadeo (twinkle) definida en index.css.
+    
+    Sintaxis: animation: nombre duración timing iteraciones;
+    - twinkle: nombre del @keyframes
+    - 2s: duración de un ciclo
+    - ease-in-out: aceleración suave al inicio y final
+    - infinite: repite para siempre
+  */
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+/*
+  nth-child SELECTORES
+  
+  :nth-child(n) selecciona el n-ésimo hijo del padre.
+  Útil para aplicar estilos diferentes a elementos
+  repetitivos sin clases individuales.
+  
+  Cada pieza tiene:
+  - Posición única (top, left)
+  - Color diferente (background)
+  - Delay de animación (para desincronizar)
+  - Forma variable (border-radius)
+*/
+
+/* Pieza 1: Dorado, circular, esquina superior izquierda */
+.confetti:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  background: var(--gold);
+  animation-delay: 0s; /* Sin delay, empieza inmediatamente */
+  border-radius: 50%; /* 50% = círculo perfecto */
+}
+
+/* Pieza 2: Rojo Toluca, cuadrado, más abajo */
+.confetti:nth-child(2) {
+  top: 20%;
+  left: 15%;
+  background: var(--toluca-red);
+  animation-delay: 0.3s; /* Empieza 0.3s después */
+  /* Sin border-radius = cuadrado */
+}
+
+/* Pieza 3: Blanco, circular, lado derecho */
+.confetti:nth-child(3) {
+  top: 15%;
+  left: 85%;
+  background: var(--white);
+  animation-delay: 0.6s;
+  border-radius: 50%;
+}
+
+/* Pieza 4: Dorado, cuadrado, esquina derecha */
+.confetti:nth-child(4) {
+  top: 30%;
+  left: 90%;
+  background: var(--gold);
+  animation-delay: 0.9s;
+}
+
+/* Pieza 5: Rojo, circular, centro superior */
+.confetti:nth-child(5) {
+  top: 5%;
+  left: 50%;
+  background: var(--toluca-red);
+  animation-delay: 1.2s;
+  border-radius: 50%;
+}
+
+/* Pieza 6: Blanco, cuadrado */
+.confetti:nth-child(6) {
+  top: 25%;
+  left: 75%;
+  background: var(--white);
+  animation-delay: 0.4s;
+}
+
+/* Pieza 7: Dorado, circular */
+.confetti:nth-child(7) {
+  top: 8%;
+  left: 30%;
+  background: var(--gold);
+  animation-delay: 0.7s;
+  border-radius: 50%;
+}
+
+/* Pieza 8: Rojo, cuadrado */
+.confetti:nth-child(8) {
+  top: 35%;
+  left: 10%;
+  background: var(--toluca-red);
+  animation-delay: 1s;
+}
+
+/* Pieza 9: Blanco, cuadrado */
+.confetti:nth-child(9) {
+  top: 12%;
+  left: 65%;
+  background: var(--white);
+  animation-delay: 0.2s;
+}
+
+/* Pieza 10: Dorado, circular, esquina inferior derecha */
+.confetti:nth-child(10) {
+  top: 40%;
+  left: 95%;
+  background: var(--gold);
+  animation-delay: 0.8s;
+  border-radius: 50%;
+}
+
+/* ============================================
+   BALONES DE FÚTBOL
+   ============================================
+*/
+.ball {
+  /*
+    position: fixed para que permanezcan visibles
+    durante el scroll, igual que el confeti.
+  */
+  position: fixed;
+
+  /* Tamaño del emoji */
+  font-size: 2rem;
+
+  /*
+    Animación de rebote.
+    La duración de 2s da un rebote suave y natural.
+  */
+  animation: bounce 2s ease-in-out infinite;
+
+  /* Detrás del contenido pero visible */
+  z-index: 1;
+
+  /*
+    filter: drop-shadow añade sombra que sigue
+    la forma del contenido (no rectangular).
+    
+    Diferencia con box-shadow:
+    - box-shadow: Sombra rectangular del elemento
+    - drop-shadow: Sombra del contenido visible (incluye transparencias)
+    
+    Para emojis, drop-shadow es mejor porque
+    la sombra sigue la forma del emoji.
+    
+    Sintaxis: drop-shadow(offset-x offset-y blur color)
+  */
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+
+  /* No seleccionable (es decorativo) */
+  user-select: none;
+
+  /* No bloquea clicks */
+  pointer-events: none;
+}
+
+/*
+  POSICIONAMIENTO DE CADA BALÓN
+  
+  Usamos clases específicas (ball-1, ball-2...) en lugar
+  de nth-child porque los balones no están en un contenedor.
+  
+  Cada balón tiene:
+  - Posición única (top, left/right)
+  - animation-delay para desincronizar rebotes
+  - font-size variable para perspectiva (más pequeño = más lejos)
+*/
+
+/* Balón 1: Superior izquierdo, grande */
+.ball-1 {
+  top: 15%;
+  left: 3%;
+  animation-delay: 0s;
+}
+
+/* Balón 2: Medio izquierdo, más pequeño */
+.ball-2 {
+  top: 60%;
+  left: 5%;
+  animation-delay: 0.5s;
+  font-size: 1.5rem; /* Más pequeño = más "lejos" */
+}
+
+/* Balón 3: Superior derecho */
+.ball-3 {
+  top: 30%;
+  right: 3%; /* Usamos right en lugar de left */
+  animation-delay: 1s;
+}
+
+/* Balón 4: Inferior derecho */
+.ball-4 {
+  top: 75%;
+  right: 5%;
+  animation-delay: 0.3s;
+  font-size: 1.8rem;
+}
+
+/* Balón 5: Medio izquierdo, pequeño */
+.ball-5 {
+  top: 45%;
+  left: 2%;
+  animation-delay: 0.7s;
+  font-size: 1.2rem; /* El más pequeño = más "lejano" */
+}
+
+/* ============================================
+   RESPONSIVE - PANTALLAS PEQUEÑAS
+   ============================================
+*/
+@media (max-width: 480px) {
+  /* Reducir tamaño de balones en móvil */
+  .ball {
+    font-size: 1.5rem;
+  }
+
+  /*
+    Ocultar algunos balones en móvil para no saturar.
+    display: none los remueve completamente del layout.
+  */
+  .ball-2,
+  .ball-5 {
+    display: none;
+  }
+
+  /* Reducir tamaño de confeti */
+  .confetti {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .ball {
+    font-size: 1.2rem;
+  }
+
+  /* Ocultar más balones */
+  .ball-4 {
+    display: none;
+  }
+
+  /* Confeti aún más pequeño */
+  .confetti {
+    width: 6px;
+    height: 6px;
+    opacity: 0.6;
+  }
+}

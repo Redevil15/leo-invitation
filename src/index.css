@@ -1,0 +1,355 @@
+/* ============================================
+   INDEX.CSS - ESTILOS GLOBALES
+   ============================================
+   Este archivo contiene:
+   1. Variables CSS (Custom Properties)
+   2. Reset de estilos
+   3. Estilos base del body
+   4. Animaciones globales reutilizables
+   
+   ¿Por qué separar estilos globales?
+   - Mantiene las variables accesibles en toda la app
+   - El reset evita inconsistencias entre navegadores
+   - Las animaciones pueden reutilizarse en cualquier componente
+*/
+
+/* ============================================
+   CSS CUSTOM PROPERTIES (VARIABLES)
+   ============================================
+   Definimos variables en :root para que estén disponibles
+   en todo el documento. Esto nos permite:
+   
+   1. Cambiar colores en un solo lugar
+   2. Mantener consistencia visual
+   3. Facilitar temas (dark mode, etc.)
+   
+   La sintaxis es: --nombre-variable: valor;
+   Se usa con: var(--nombre-variable)
+*/
+:root {
+  /* === PALETA DEL TOLUCA FC === */
+  /* 
+    El rojo del Toluca es icónico - #C8102E es el rojo oficial
+    Creamos variantes para diferentes usos:
+    - dark: Para sombras, hovers, bordes
+    - light: Para acentos, highlights
+  */
+  --toluca-red: #c8102e;
+  --toluca-red-dark: #9b0d24;
+  --toluca-red-light: #e53e3e;
+
+  /* === COLORES NEUTRALES === */
+  --white: #ffffff;
+  --black: #1a1a1a;
+  --gray-dark: #333333;
+  --gray-medium: #666666;
+  --gray-light: #f5f5f5;
+
+  /* === COLORES DE ACENTO === */
+  /* 
+    El dorado evoca trofeos y celebración
+    El verde simula el césped del estadio
+  */
+  --gold: #ffd700;
+  --gold-dark: #b8960f;
+  --grass-green: #2d5016;
+  --grass-light: #4a7c23;
+
+  /* === COLORES FUNCIONALES === */
+  /* Para los botones de acción */
+  --whatsapp-green: #25d366;
+  --whatsapp-dark: #128c7e;
+  --maps-blue: #4285f4;
+  --maps-dark: #1a73e8;
+
+  /* === TIPOGRAFÍAS === */
+  /* 
+    --font-display: Para títulos grandes, impactantes
+    --font-body: Para texto de lectura, información
+  */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body: 'Poppins', 'Segoe UI', sans-serif;
+
+  /* === ESPACIADO === */
+  /* 
+    Sistema de espaciado consistente basado en múltiplos de 4px
+    Esto crea ritmo visual y facilita el diseño responsive
+  */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* === BORDES === */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 50px; /* Para pill buttons */
+
+  /* === SOMBRAS === */
+  /* 
+    Sombras con múltiples capas crean más profundidad
+    Usamos RGBA para transparencia
+  */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  /* === TRANSICIONES === */
+  /* 
+    cubic-bezier personalizado para efecto "bounce"
+    Los valores controlan la curva de aceleración
+  */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-bounce: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   CSS RESET
+   ============================================
+   Eliminamos estilos por defecto del navegador
+   para tener una base consistente
+*/
+
+/* 
+  Universal selector (*) aplica a todos los elementos
+  box-sizing: border-box hace que padding y border
+  se incluyan en el width/height declarado
+  
+  Ejemplo sin border-box:
+    width: 100px + padding: 20px = 140px total
+  
+  Con border-box:
+    width: 100px (incluye el padding) = 100px total
+*/
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 
+  scroll-behavior: smooth activa animación suave
+  al navegar con anclas (#seccion)
+*/
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   ESTILOS BASE DEL BODY
+   ============================================
+*/
+body {
+  font-family: var(--font-body);
+  color: var(--gray-dark);
+  line-height: 1.6; /* Mejora legibilidad del texto */
+
+  /* 
+    min-height: 100vh asegura que el body ocupe
+    al menos toda la altura de la ventana
+    (vh = viewport height)
+  */
+  min-height: 100vh;
+
+  /* 
+    Fondo que simula césped de estadio
+    Usamos múltiples gradientes apilados:
+    
+    1. repeating-linear-gradient: Crea las "franjas" del césped
+       - 90deg: Dirección horizontal
+       - transparent a 50px, luego línea sutil hasta 100px
+       - Se repite infinitamente
+    
+    2. linear-gradient: El verde base del césped
+       - Gradiente vertical (180deg)
+       - Más oscuro arriba y abajo, más claro en medio
+         (simula iluminación de estadio)
+  */
+  background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 50px,
+      rgba(255, 255, 255, 0.03) 50px,
+      rgba(255, 255, 255, 0.03) 100px
+    ),
+    linear-gradient(
+      180deg,
+      var(--grass-green) 0%,
+      var(--grass-light) 50%,
+      var(--grass-green) 100%
+    );
+
+  /* 
+    background-attachment: fixed
+    El fondo permanece estático al hacer scroll
+    Crea efecto "parallax" donde el contenido
+    parece flotar sobre el césped
+  */
+  background-attachment: fixed;
+
+  /* Evita scroll horizontal accidental */
+  overflow-x: hidden;
+}
+
+/* ============================================
+   ANIMACIONES GLOBALES (KEYFRAMES)
+   ============================================
+   Definimos animaciones reutilizables.
+   
+   @keyframes define los estados de la animación
+   Se aplican con: animation: nombre duración timing;
+*/
+
+/* 
+  BOUNCE - Efecto de rebote para balones
+  Simula física de pelota rebotando
+  
+  0%, 100%: Posición inicial/final (mismo estado = loop suave)
+  50%: Punto máximo del rebote
+  
+  translateY(-20px): Mueve 20px hacia arriba
+  rotate(180deg): Gira media vuelta (realismo)
+*/
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+/* 
+  SLIDE-UP - Entrada desde abajo con fade
+  Usado para elementos que aparecen al cargar
+  
+  from: Estado inicial (invisible, 30px abajo)
+  to: Estado final (visible, posición normal)
+*/
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 
+  PULSE - Efecto de pulso/latido
+  Llama la atención sin ser intrusivo
+  
+  scale(1.05): Agranda 5% en el punto medio
+*/
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* 
+  TWINKLE - Parpadeo suave
+  Para elementos decorativos como confeti
+*/
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* 
+  FLOAT - Flotación suave
+  Movimiento orgánico para decoraciones
+  
+  Combina translateY (arriba/abajo) con
+  rotate (inclinación) para más naturalidad
+*/
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+/* 
+  SPIN - Rotación continua
+  Útil para loaders o elementos giratorios
+*/
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 
+  SHAKE - Sacudida horizontal
+  Para feedback de error o llamar atención
+*/
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* ============================================
+   UTILIDADES GLOBALES
+   ============================================
+   Clases helper reutilizables
+*/
+
+/* Ocultar visualmente pero mantener accesible para screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Centrar contenido flex */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Texto que no se puede seleccionar (para decoraciones) */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}

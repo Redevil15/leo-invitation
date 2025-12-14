@@ -1,0 +1,26 @@
+.app-container {
+  max-width: 380px; /* Era 500px, ahora más angosto */
+  margin: 0 auto;
+  padding: 20px 10px; /* Menos padding horizontal */
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+@media (max-width: 420px) {
+  .app-container {
+    max-width: 340px;
+    padding: 15px 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-container {
+    max-width: 300px;
+    padding: 10px 5px;
+  }
+}
